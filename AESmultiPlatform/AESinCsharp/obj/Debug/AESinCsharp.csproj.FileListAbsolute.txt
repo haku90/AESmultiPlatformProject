@@ -1,0 +1,8 @@
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\bin\Debug\AESinCsharp.exe.config
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\bin\Debug\AESinCsharp.exe
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\bin\Debug\AESinCsharp.pdb
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\obj\Debug\AESinCsharp.csprojResolveAssemblyReference.cache
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\obj\Debug\AESinCsharp.Properties.Resources.resources
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\obj\Debug\AESinCsharp.csproj.GenerateResource.Cache
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\obj\Debug\AESinCsharp.exe
+C:\Users\Haku\Documents\Visual Studio 2013\Projects\AESmultiPlatformProject\AESmultiPlatform\AESinCsharp\obj\Debug\AESinCsharp.pdb
