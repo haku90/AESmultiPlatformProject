@@ -62,10 +62,26 @@ void SubBytes(char state[4][4])
 	}
 }
 //Function ShiftRows
-void ShiftRows()
+void ShiftRows(char state[4][4])
 {
-
+	unsigned char valueToSave;
+	for (int numOfRows = 1; numOfRows < 4; numOfRows++)
+	{
+		for (int j = 0; j < numOfRows; j++)
+		{
+			valueToSave = state[numOfRows][0];
+			for (int i = 0; i < 4; i++)
+			{
+				if (i != 3)
+					state[numOfRows][i] = state[numOfRows][i + 1];
+				else
+					state[numOfRows][i] = valueToSave;
+			}
+		}
+	}
+	
 }
+
 // functionMain
 int main()
 {
@@ -77,8 +93,7 @@ int main()
 	TrensferMessageInStateArray(&state, message);
 
 	SubBytes(&state);
-	
-	
+	ShiftRows(&state);
 	return 1;
 
 }
