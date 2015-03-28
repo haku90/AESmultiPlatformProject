@@ -28,7 +28,7 @@ void ReadFile(char* nameFile, char* buff)
 	ptr_file = fopen(nameFile, "r");
 	if (!ptr_file)
 		return;
-	fgets(buff, 16, ptr_file);
+	fgets(buff, 17, ptr_file);
 	//printf("%s", buff);
 	fclose(ptr_file);
 }
