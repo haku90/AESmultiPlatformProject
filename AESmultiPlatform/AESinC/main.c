@@ -1,22 +1,29 @@
 #include<stdio.h>
 
-void main()
+//Function
+void ReadFile(char* nameFile, char* buff)
 {
 	FILE *ptr_file;
-	char buf[1000];
-
-	ptr_file = fopen("message.txt", "r");
+	ptr_file = fopen(nameFile, "r");
 	if (!ptr_file)
 		return;
-
-	while (fgets(buf, 1000, ptr_file) != NULL)
-	{
-		printf("%s", buf);
-	}
-	printf("%c\n", buf[2]);
-	char temp = buf[2];
-	printf("%c\n", buf[4]);
-
+	fgets(buff, 16, ptr_file);
+	//printf("%s", buff);
 	fclose(ptr_file);
+}
+void SubBytes()
+{
+
+}
+// functionMain
+int main()
+{
+	
+	unsigned char message[16], state[4][4];
+	char* fileName = "message.txt";
+	ReadFile(fileName, message);
+	
+	
+	return 1;
 
 }
