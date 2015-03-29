@@ -29,5 +29,11 @@
     <Text Include="message.txt">
       <Filter>res</Filter>
     </Text>
+    <Text Include="Key.txt">
+      <Filter>res</Filter>
+    </Text>
+    <Text Include="EncodeMessage.txt">
+      <Filter>res</Filter>
+    </Text>
   </ItemGroup>
 </Project>

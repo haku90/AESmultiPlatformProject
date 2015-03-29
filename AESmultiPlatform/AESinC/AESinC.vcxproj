@@ -81,6 +81,8 @@
     <ClCompile Include="test.c" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="EncodeMessage.txt" />
+    <Text Include="Key.txt" />
     <Text Include="message.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
