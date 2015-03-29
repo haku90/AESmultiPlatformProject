@@ -48,7 +48,7 @@ void ReadFile(char* nameFile, char* buff)
 	ptr_file = fopen(nameFile, "r");
 	if (!ptr_file)
 		return;
-	fgets(buff, 17, ptr_file);
+	fread(buff, 8, 16, ptr_file);
 	//printf("%s", buff);
 	fclose(ptr_file);
 }
@@ -217,15 +217,15 @@ int main()
 	int numOfRound = 10;
 
 	unsigned char message[16], state[4][4], encode[16];
+	
 	char* fileName = "message.txt";
-	ReadFile(fileName, message);
-	ReadFile(fileName, message);
+	ReadFile(fileName, &message);
 	TrensferMessageInStateArray(&state, message);
 
 	char* fileNameKey = "Key.txt";
 	unsigned char key[16];
-	ReadFile(fileNameKey, key);
-	TrensferMessageInStateArray(&cipherKey, key);
+	ReadFile(fileNameKey, &key);
+	TrensferMessageInStateArray(&cipherKey, &key);
 
 	unsigned char temp[4];
 	KeyExpansion(&temp);
