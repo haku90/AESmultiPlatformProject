@@ -48,7 +48,7 @@ void ReadFile(char* nameFile, char* buff)
 	ptr_file = fopen(nameFile, "r");
 	if (!ptr_file)
 		return;
-	fread(buff, 8, 16, ptr_file);
+	fread(buff, sizeof(char), 16, ptr_file);
 	//printf("%s", buff);
 	fclose(ptr_file);
 }
