@@ -139,25 +139,6 @@ void MixColumns(char state[4][4])
 		state[3][i] = (temp[0] << 2) ^ temp[1] ^ temp[2] ^ (temp[3] << 1);
 	}
 }
-//Function RotWord
-void RotWord(unsigned char w[4])
-{
-	unsigned char temp_w = w[0];
-	for (int i = 0; i < 3; i++)
-	{
-		w[i] = w[i + 1];
-	}
-	w[4] = temp_w;
-}
-//Function SubWord
-void SubWord(unsigned char w[4])
-{
-	for (int i = 0; i < 4; i++)
-	{
-		w[i] = getValueFromSbox(w[i]);
-		printf("%c", w[i]);
-	}
-}
 //Function KeyExpansion
 void KeyExpansion(unsigned char temp[4])
 {
@@ -190,7 +171,11 @@ void KeyExpansion(unsigned char temp[4])
 		}
 		else if (Nk > 6 && (i % Nk) == 4)
 		{
-			SubWord(&temp);
+			//SubWord
+			for (int s = 0; s < 4; s++)
+			{
+				temp[s] = getValueFromSbox(temp[s]);
+			}
 		}
 		cipherKey[i][0] = cipherKey[(i - Nk)][0] ^ temp[0];
 		cipherKey[i][1] = cipherKey[(i - Nk)][1] ^ temp[1];
