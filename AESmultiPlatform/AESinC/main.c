@@ -381,94 +381,6 @@ void AddRoundKey(char state[4][4], int iterRound)
 	}
 }
 
-/*
-void KeyExpansion(char Key[16])
-{
-	int i, j;
-	unsigned char temp[4], k;
-	int Nk = 4;
-	int Nb = 4;
-	int Nr = 10;
-	// The first round key is the key itself.
-	for (i = 0; i<Nk; i++)
-	{
-		RoundKey[i * 4] = Key[i * 4];
-		RoundKey[i * 4 + 1] = Key[i * 4 + 1];
-		RoundKey[i * 4 + 2] = Key[i * 4 + 2];
-		RoundKey[i * 4 + 3] = Key[i * 4 + 3];
-	}
-
-	// All other round keys are found from the previous round keys.
-	
-	while (i < (Nb * (Nr + 1)))
-	{
-		for (j = 0; j<4; j++)
-		{
-			temp[j] = RoundKey[(i - 1) * 4 + j];
-		}
-		if (i % Nk == 0)
-		{
-			// This function rotates the 4 bytes in a word to the left once.
-			// [a0,a1,a2,a3] becomes [a1,a2,a3,a0]
-
-			// Function RotWord()
-			{
-				k = temp[0];
-				temp[0] = temp[1];
-				temp[1] = temp[2];
-				temp[2] = temp[3];
-				temp[3] = k;
-			}
-
-			// SubWord() is a function that takes a four-byte input word and 
-			// applies the S-box to each of the four bytes to produce an output word.
-
-			// Function Subword()
-			{
-				temp[0] = getValueFromSbox(temp[0]);
-				temp[1] = getValueFromSbox(temp[1]);
-				temp[2] = getValueFromSbox(temp[2]);
-				temp[3] = getValueFromSbox(temp[3]);
-			}
-
-			temp[0] = temp[0] ^ Rcon[i / Nk];
-	}
-		else if (Nk > 6 && i % Nk == 4)
-		{
-
-		// Function Subword()
-			{
-				temp[0] = getValueFromSbox(temp[0]);
-				temp[1] = getValueFromSbox(temp[1]);
-				temp[2] = getValueFromSbox(temp[2]);
-				temp[3] = getValueFromSbox(temp[3]);
-			}
-		}
-		RoundKey[i * 4 + 0] = RoundKey[(i - Nk) * 4 + 0] ^ temp[0];
-		RoundKey[i * 4 + 1] = RoundKey[(i - Nk) * 4 + 1] ^ temp[1];
-		RoundKey[i * 4 + 2] = RoundKey[(i - Nk) * 4 + 2] ^ temp[2];
-		RoundKey[i * 4 + 3] = RoundKey[(i - Nk) * 4 + 3] ^ temp[3];
-		i++;
-	}
-}
-
-// This function adds the round key to state.
-// The round key is added to the state by an XOR function.
-void AddRoundKey(char state[4][4] ,int round)
-{
-	int i, j;
-	int Nk = 4;
-	int Nb = 4;
-	int Nr = 10;
-	for (i = 0; i<4; i++)
-	{
-		for (j = 0; j<4; j++)
-		{
-			state[j][i] ^= RoundKey[round * Nb * 4 + i * Nb + j];
-		}
-	}
-}
-*/
 // functionMain
 int main()
 {
@@ -497,31 +409,8 @@ int main()
 	TrensferMessageInStateArray(&cipherKey, &key);
 
 
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			printf("%02x", cipherKey[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-
-
-
 	unsigned char temp[4];
 	KeyExpansion(&temp);
-
-
-	
-		for (int j = 0; j < 176; j++)
-		{
-			printf("%02x", RoundKey[j]);
-			printf("\n");
-		}
-		
-	
-	printf("\n");
 
 
 
@@ -532,16 +421,6 @@ int main()
 		ShiftRows(&state);
 		MixColumns(&state);
 		AddRoundKey(&state, i);
-		
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				printf("%02x", state[i][j]);
-			}
-			printf("\n");
-		}
-			printf("\n");
 	}
 	SubBytes(&state);
 	ShiftRows(&state);
