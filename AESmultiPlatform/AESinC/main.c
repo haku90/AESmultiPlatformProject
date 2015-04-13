@@ -1,4 +1,5 @@
 #include<stdio.h>
+
 //Global variables
 //Cipher Key
 unsigned char cipherKey[44][4];
@@ -97,6 +98,7 @@ int x3[256] = {
 	0x3b, 0x38, 0x3d, 0x3e, 0x37, 0x34, 0x31, 0x32, 0x23, 0x20, 0x25, 0x26, 0x2f, 0x2c, 0x29, 0x2a,
 	0x0b, 0x08, 0x0d, 0x0e, 0x07, 0x04, 0x01, 0x02, 0x13, 0x10, 0x15, 0x16, 0x1f, 0x1c, 0x19, 0x1a
 };
+
 //
 //Function
 //Function ReadFile
@@ -128,7 +130,7 @@ void TrensferMessageInStateArray(char state[4][4], char* message)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			state[i][j] = message[i * 4 + j];
+			state[j][i] = message[i * 4 + j];
 		}
 	}
 
@@ -386,24 +388,24 @@ int main()
 {
 	int numOfRound = 10;
 
-	unsigned char message[16], state[4][4], encode[16];
-	
-	char* fileName = "message.txt";
+	unsigned char message[16], state[4][4], encode[16],decode[16];
+	unsigned char message2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+	unsigned char key2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+	unsigned char* fileName = "message.txt";
 	ReadFile(fileName, &message);
 	TrensferMessageInStateArray(&state, message);
-
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			printf("%02x", state[i][j]);
+			printf("%02x", state[j][i]);
 		}
 		printf("\n");
 	}
 	printf("\n");
 
 
-	char* fileNameKey = "Key.txt";
+	unsigned char* fileNameKey = "Key.txt";
 	unsigned char key[16];
 	ReadFile(fileNameKey, &key);
 	TrensferMessageInStateArray(&cipherKey, &key);
@@ -430,12 +432,29 @@ int main()
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			printf("%02x", state[i][j]);
+			printf("%02x", state[j][i]);
 		}
 		printf("\n");
 	}
 	printf("\n");
+	TransferEncodeMessageToEncodeTable(&state, &encode);
+	unsigned char* fileNameWrite = "EncodeMessage.txt";
+	WriteFile(fileNameWrite, &encode);
+	unsigned char* fileNameEncodeMessage = "EncodeMessage.txt";
+	ReadFile(fileNameEncodeMessage, &encode);
+	TrensferMessageInStateArray(&state, &encode);
 
+	KeyExpansion(&temp);
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			printf("%02x", state[j][i]);
+		}
+		printf("\n");
+	}
+	printf("\n");
 	AddRoundKey(&state, numOfRound);
 	for (int i = numOfRound-1; i >0; i--)
 	{
@@ -443,23 +462,25 @@ int main()
 		InvSubBytes(&state);
 		AddRoundKey(&state, i);
 		InvMixColumns(&state);
+		
+		
+		
 	}
 	InvShiftRows(&state);
 	InvSubBytes(&state);
-	AddRoundKey(&state,0);
+	AddRoundKey(&state, 0);
 
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			printf("%02x", state[i][j]);
+			printf("%02x", state[j][i]);
 		}
 		printf("\n");
 	}
-
-	TransferEncodeMessageToEncodeTable(&state, &encode);
-	char* fileNameWrite = "EncodeMessage.txt";
-	WriteFile(fileNameWrite, &encode);
+	TransferEncodeMessageToEncodeTable(&state, &decode);
+	unsigned char* fileNameWriteD = "DecodeMessage.txt";
+	WriteFile(fileNameWriteD, decode);
 	return 1;
 
 }
