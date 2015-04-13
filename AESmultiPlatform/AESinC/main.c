@@ -513,14 +513,14 @@ int main()
 	KeyExpansion(&temp);
 
 
-	for (int i = 0; i < 44; i++)
-	{
-		for (int j = 0; j < 4; j++)
+	
+		for (int j = 0; j < 176; j++)
 		{
-			printf("%02x", cipherKey[i][j]);
+			printf("%02x", RoundKey[j]);
+			printf("\n");
 		}
-		printf("\n");
-	}
+		
+	
 	printf("\n");
 
 
