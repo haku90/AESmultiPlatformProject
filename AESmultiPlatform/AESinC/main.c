@@ -467,6 +467,12 @@ void main()
 	KeyExpansion();
 	printf("Tekst jawny w hex:\n");
 	DisplayOut(&message);
+	TransferEncodeMessageToEncodeTable(&state, &encode);
+	unsigned char* fileNameWrite = "EncodeMessage.txt";
+	WriteFile(fileNameWrite, &encode);
+	unsigned char* fileNameEncodeMessage = "EncodeMessage.txt";
+	ReadFile(fileNameEncodeMessage, &encode);
+	TrensferMessageInStateArray(&state, &encode);
 
 	//Szyforwanie.
 	TransferMessageInStateArray();
@@ -474,8 +480,16 @@ void main()
 	TransferEncodeMessageToEncodeTable();
 	printf("\nZaszyfrowany w hex:\n");
 	for (i = 0; i<Nk * 4; i++)
+			printf("%02x", state[j][i]);
+		}
+		printf("\n");
+	}
+	printf("\n");
 	{
 		printf("%02x ", out[i]);
+		
+		
+		
 	}
 	printf("\n\n");
 
