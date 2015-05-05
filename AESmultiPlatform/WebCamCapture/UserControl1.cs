@@ -190,27 +190,7 @@ namespace WebCamCapture
                 {
                         //TODO: aes encrypt i decrypt.
                         //Key zawiera klucz do szyfrowania KyeForDecrypt zawiera klczu do deszyfrowani.
-                    message = imageToByteArray(tempImg);
-
-                    using (var rijndael = new RijndaelManaged())
-                    {
-                        rijndael.GenerateKey();
-                        rijndael.GenerateIV();
-                        key = rijndael.Key;
-                        iv = rijndael.IV;
-                        encMessage = EncryptBytes(rijndael, message);
-                    }
-
-                    using (var rijndael = new RijndaelManaged())
-                    {
-                        rijndael.Key = key;
-                        rijndael.IV = iv;
-                        decMessage = DecryptBytes(rijndael, encMessage);
-                    }
-
-                    tempImg = byteArrayToImage(decMessage);
-                }
-
+         
               
 
 
@@ -229,67 +209,8 @@ namespace WebCamCapture
             {
                 MessageBox.Show(ex.Message);
             }
+            void IDisposable.Dispose() { this.Dispose(); }
         }
-        public byte[] imageToByteArray(System.Drawing.Image imageIn)
-        {
-            MemoryStream ms = new MemoryStream();
-            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
-            return ms.ToArray();
-        }
-
-        public Image byteArrayToImage(byte[] byteArrayIn)
-        {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
-            Image returnImage = Image.FromStream(ms);
-            return returnImage;
-        }
-        private static byte[] EncryptBytes(
-         SymmetricAlgorithm alg,
-         byte[] message)
-        {
-            if ((message == null) || (message.Length == 0))
-            {
-                return message;
-            }
-
-            if (alg == null)
-            {
-                throw new ArgumentNullException("alg");
-            }
-
-            using (var stream = new MemoryStream())
-            using (var encryptor = alg.CreateEncryptor())
-            using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
-            {
-                encrypt.Write(message, 0, message.Length);
-                encrypt.FlushFinalBlock();
-                return stream.ToArray();
-            }
-        }
-
-        private static byte[] DecryptBytes(
-        SymmetricAlgorithm alg,
-        byte[] message)
-        {
-            if ((message == null) || (message.Length == 0))
-            {
-                return message;
-            }
-
-            if (alg == null)
-            {
-                throw new ArgumentNullException("alg");
-            }
-
-            using (var stream = new MemoryStream())
-            using (var decryptor = alg.CreateDecryptor())
-            using (var encrypt = new CryptoStream(stream, decryptor, CryptoStreamMode.Write))
-            {
-                encrypt.Write(message, 0, message.Length);
-                encrypt.FlushFinalBlock();
-                return stream.ToArray();
-            }
-        }
-        void IDisposable.Dispose() { this.Dispose(); }
+     
     }
 }
