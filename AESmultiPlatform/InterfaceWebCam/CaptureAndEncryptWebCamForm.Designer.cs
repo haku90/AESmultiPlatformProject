@@ -35,11 +35,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.uxKeyForDecrypt = new System.Windows.Forms.TextBox();
+            this.userControl12 = new WebCamCapture.UserControl1();
             this.SuspendLayout();
             // 
             // userControl11
             // 
             this.userControl11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.userControl11.Key = null;
+            this.userControl11.KeyForDecrypt = null;
             this.userControl11.Location = new System.Drawing.Point(12, 12);
             this.userControl11.Name = "userControl11";
             this.userControl11.Size = new System.Drawing.Size(260, 179);
@@ -47,7 +50,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(38, 210);
+            this.btnStart.Location = new System.Drawing.Point(32, 222);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 38);
             this.btnStart.TabIndex = 1;
@@ -57,7 +60,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(167, 210);
+            this.btnStop.Location = new System.Drawing.Point(161, 222);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 38);
             this.btnStop.TabIndex = 2;
@@ -67,16 +70,17 @@
             // 
             // uxKeyEncrypt
             // 
-            this.uxKeyEncrypt.Location = new System.Drawing.Point(402, 22);
+            this.uxKeyEncrypt.Location = new System.Drawing.Point(392, 205);
             this.uxKeyEncrypt.Name = "uxKeyEncrypt";
             this.uxKeyEncrypt.Size = new System.Drawing.Size(232, 20);
             this.uxKeyEncrypt.TabIndex = 3;
+            this.uxKeyEncrypt.Text = "12345678";
             this.uxKeyEncrypt.TextChanged += new System.EventHandler(this.uxKeyEncrypt_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(360, 25);
+            this.label1.Location = new System.Drawing.Point(350, 208);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 4;
@@ -85,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(278, 57);
+            this.label2.Location = new System.Drawing.Point(268, 240);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(121, 13);
             this.label2.TabIndex = 5;
@@ -93,17 +97,29 @@
             // 
             // uxKeyForDecrypt
             // 
-            this.uxKeyForDecrypt.Location = new System.Drawing.Point(402, 57);
+            this.uxKeyForDecrypt.Location = new System.Drawing.Point(392, 240);
             this.uxKeyForDecrypt.Name = "uxKeyForDecrypt";
             this.uxKeyForDecrypt.Size = new System.Drawing.Size(232, 20);
             this.uxKeyForDecrypt.TabIndex = 6;
+            this.uxKeyForDecrypt.Text = "12345678";
             this.uxKeyForDecrypt.TextChanged += new System.EventHandler(this.uxKeyForDecrypt_TextChanged);
+            // 
+            // userControl12
+            // 
+            this.userControl12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.userControl12.Key = null;
+            this.userControl12.KeyForDecrypt = null;
+            this.userControl12.Location = new System.Drawing.Point(364, 12);
+            this.userControl12.Name = "userControl12";
+            this.userControl12.Size = new System.Drawing.Size(260, 179);
+            this.userControl12.TabIndex = 7;
             // 
             // uxKey
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 262);
+            this.ClientSize = new System.Drawing.Size(674, 296);
+            this.Controls.Add(this.userControl12);
             this.Controls.Add(this.uxKeyForDecrypt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -113,6 +129,7 @@
             this.Controls.Add(this.userControl11);
             this.Name = "uxKey";
             this.Text = "Szyfrowanie Obrazu z Kamery";
+            this.Load += new System.EventHandler(this.uxKey_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,6 +144,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox uxKeyForDecrypt;
+        private WebCamCapture.UserControl1 userControl12;
     }
 }
 

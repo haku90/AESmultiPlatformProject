@@ -19,25 +19,31 @@ namespace InterfaceWebCam
         private void btnStart_Click(object sender, EventArgs e)
         {
             userControl11.Start();
+            userControl12.Start();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             userControl11.Stop();
+            userControl12.Stop();
         }
 
         private void uxKeyEncrypt_TextChanged(object sender, EventArgs e)
         {
-            userControl11.Stop();
-            userControl11.Key = uxKeyEncrypt.Text;
+            userControl12.Key = uxKeyEncrypt.Text;
             
         }
 
         private void uxKeyForDecrypt_TextChanged(object sender, EventArgs e)
         {
-            userControl11.Stop();
-            userControl11.KeyForDecrypt = uxKeyForDecrypt.Text;
+            userControl12.KeyForDecrypt = uxKeyForDecrypt.Text;
             
+        }
+
+        private void uxKey_Load(object sender, EventArgs e)
+        {
+            userControl12.Key = uxKeyEncrypt.Text;
+            userControl12.KeyForDecrypt = uxKeyForDecrypt.Text;
         }
     }
 }
