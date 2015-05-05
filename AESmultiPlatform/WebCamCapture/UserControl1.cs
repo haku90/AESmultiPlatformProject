@@ -6,6 +6,8 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace WebCamCapture
 {
@@ -83,6 +85,17 @@ namespace WebCamCapture
 
         public string Key { get; set; }
         public string KeyForDecrypt { get; set; }
+
+        byte[] key;
+        byte[] iv;
+        byte[] message; // fill with your bytes
+        byte[] encMessage; // the encrypted bytes
+        byte[] decMessage; // the decrypted bytes - s/b same as message
+        byte[] Key2 = new byte[]{0x43, 0x72, 0x6e, 0x6d, 0x54, 0x4d, 0x65,
+                                      0x94, 0x16, 0x32, 0x44, 0x84, 0x7e, 0x18,
+                                      0x64, 0x76, 0x6e, 0x63, 0x64, 0x7a, 0x5f,
+                                      0x84, 0x7f, 0x9a};
+
         public UserControl1()
         {
             InitializeComponent();
@@ -172,11 +185,35 @@ namespace WebCamCapture
 
                 IDataObject tempObj = Clipboard.GetDataObject();
                 Image tempImg = (System.Drawing.Bitmap)tempObj.GetData(DataFormats.Bitmap);
+
                 if(Key != null && KeyForDecrypt != null)
                 {
-                    //TODO: aes encrypt i decrypt.
-                    //Key zawiera klucz do szyfrowania KyeForDecrypt zawiera klczu do deszyfrowani.
+                        //TODO: aes encrypt i decrypt.
+                        //Key zawiera klucz do szyfrowania KyeForDecrypt zawiera klczu do deszyfrowani.
+                    message = imageToByteArray(tempImg);
+
+                    using (var rijndael = new RijndaelManaged())
+                    {
+                        rijndael.GenerateKey();
+                        rijndael.GenerateIV();
+                        key = rijndael.Key;
+                        iv = rijndael.IV;
+                        encMessage = EncryptBytes(rijndael, message);
+                    }
+
+                    using (var rijndael = new RijndaelManaged())
+                    {
+                        rijndael.Key = key;
+                        rijndael.IV = iv;
+                        decMessage = DecryptBytes(rijndael, encMessage);
+                    }
+
+                    tempImg = byteArrayToImage(decMessage);
                 }
+
+              
+
+
                 ImgWebCam.Image = tempImg;
 
                 ImgWebCam.Refresh();
@@ -193,7 +230,66 @@ namespace WebCamCapture
                 MessageBox.Show(ex.Message);
             }
         }
+        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
+        }
 
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+        private static byte[] EncryptBytes(
+         SymmetricAlgorithm alg,
+         byte[] message)
+        {
+            if ((message == null) || (message.Length == 0))
+            {
+                return message;
+            }
+
+            if (alg == null)
+            {
+                throw new ArgumentNullException("alg");
+            }
+
+            using (var stream = new MemoryStream())
+            using (var encryptor = alg.CreateEncryptor())
+            using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
+            {
+                encrypt.Write(message, 0, message.Length);
+                encrypt.FlushFinalBlock();
+                return stream.ToArray();
+            }
+        }
+
+        private static byte[] DecryptBytes(
+        SymmetricAlgorithm alg,
+        byte[] message)
+        {
+            if ((message == null) || (message.Length == 0))
+            {
+                return message;
+            }
+
+            if (alg == null)
+            {
+                throw new ArgumentNullException("alg");
+            }
+
+            using (var stream = new MemoryStream())
+            using (var decryptor = alg.CreateDecryptor())
+            using (var encrypt = new CryptoStream(stream, decryptor, CryptoStreamMode.Write))
+            {
+                encrypt.Write(message, 0, message.Length);
+                encrypt.FlushFinalBlock();
+                return stream.ToArray();
+            }
+        }
         void IDisposable.Dispose() { this.Dispose(); }
     }
 }
