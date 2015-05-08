@@ -393,7 +393,8 @@ int[] x14 = new int[256]
 			        }
                     var ecrypt = encryptImage.ToArray();
                     encryptImage.Clear();
-                    KeyExpansion(Key3);
+                    //INNY KLUCZ
+                    //KeyExpansion(Key3);
                     //Decrypt
                     for (int j = 0; j < message.Length / 16; j++)
                     {
@@ -635,7 +636,7 @@ int[] x14 = new int[256]
         //Function Encrypt.
         void Encrypt()
         {
-            int i, j, round = 0;
+            int round = 0;
             AddRoundKey(0);
             for (round = 1; round < Nr; round++)
             {
@@ -651,7 +652,7 @@ int[] x14 = new int[256]
         }
         void Decrypt()
         {
-            int i, j, round = 0;
+            int round = 0;
             AddRoundKey(Nr);
             for (round = Nr - 1; round > 0; round--)
             {
