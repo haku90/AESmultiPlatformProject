@@ -376,6 +376,8 @@ int[] x14 = new int[256]
                 if (Key != null && KeyForDecrypt != null)
                 {
                     //Encrypt
+                    //Klucz do szyfracji
+                    KeyExpansion(Key2);
                     message = imageToByteArray(tempImg);
                     int oldSize = message.Length;
                     int x16 = ((message.Length / 16) + 1) * 16;
@@ -395,7 +397,8 @@ int[] x14 = new int[256]
                     var ecrypt = encryptImage.ToArray();
                     encryptImage.Clear();
                     //INNY KLUCZ
-                    KeyExpansion(Key3);
+                    //Klucz do deszyfracji
+                    KeyExpansion(Key2);
                     //Decrypt
                     for (int j = 0; j < message.Length / 16; j++)
                     {
