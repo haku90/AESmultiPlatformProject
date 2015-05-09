@@ -74,7 +74,7 @@
             this.uxKeyEncrypt.Name = "uxKeyEncrypt";
             this.uxKeyEncrypt.Size = new System.Drawing.Size(232, 20);
             this.uxKeyEncrypt.TabIndex = 3;
-            this.uxKeyEncrypt.Text = "12345678";
+            this.uxKeyEncrypt.Text = "0123456789abcdef";
             this.uxKeyEncrypt.TextChanged += new System.EventHandler(this.uxKeyEncrypt_TextChanged);
             // 
             // label1
@@ -101,7 +101,7 @@
             this.uxKeyForDecrypt.Name = "uxKeyForDecrypt";
             this.uxKeyForDecrypt.Size = new System.Drawing.Size(232, 20);
             this.uxKeyForDecrypt.TabIndex = 6;
-            this.uxKeyForDecrypt.Text = "12345678";
+            this.uxKeyForDecrypt.Text = "0123456789abcdef";
             this.uxKeyForDecrypt.TextChanged += new System.EventHandler(this.uxKeyForDecrypt_TextChanged);
             // 
             // userControl12
