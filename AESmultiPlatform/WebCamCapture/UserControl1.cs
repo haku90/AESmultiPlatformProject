@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace WebCamCapture
 {
@@ -394,7 +395,7 @@ int[] x14 = new int[256]
                     var ecrypt = encryptImage.ToArray();
                     encryptImage.Clear();
                     //INNY KLUCZ
-                    //KeyExpansion(Key3);
+                    KeyExpansion(Key3);
                     //Decrypt
                     for (int j = 0; j < message.Length / 16; j++)
                     {
@@ -440,9 +441,34 @@ int[] x14 = new int[256]
         //Byte Array to Image
         public Image byteArrayToImage(byte[] byteArrayIn)
         {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
-            Image returnImage = Image.FromStream(ms);
-            return returnImage;
+
+            try
+            {
+                MemoryStream ms = new MemoryStream(byteArrayIn);
+                Image returnImage = Image.FromStream(ms);
+                return returnImage;
+            }
+            catch
+            {
+                int size = (int)Math.Sqrt(byteArrayIn.Length); // Some bytes will not be used as we round down here
+
+                Bitmap bitmap = new Bitmap(size, size, PixelFormat.Format8bppIndexed);
+                BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+
+                try
+                {
+                    // Copy byteArrayIn to bitmapData row by row (to account for the case
+                    // where bitmapData.Stride != bitmap.Width)
+                    for (int rowIndex = 0; rowIndex < bitmapData.Height; ++rowIndex)
+                        Marshal.Copy(byteArrayIn, rowIndex * bitmap.Width, bitmapData.Scan0 + rowIndex * bitmapData.Stride, bitmap.Width);
+                }
+                finally
+                {
+                    bitmap.UnlockBits(bitmapData);
+                }
+
+                return bitmap;
+            }
         }
 
         //Function KeyExpansion
