@@ -287,7 +287,7 @@ int[] x14 = new int[256]
             Nr = 128;
             Nk = Nr / 32;
             Nr = Nk + 6;
-            KeyExpansion(Key2);
+            //KeyExpansion(Key2);
         }
         private void ImageSize()
         {
@@ -378,7 +378,7 @@ int[] x14 = new int[256]
                     //Encrypt
                     //Klucz do szyfracji
                     
-                    KeyExpansion(Key2);
+                    KeyExpansion(Encoding.ASCII.GetBytes(Key));
                     message = imageToByteArray(tempImg);
                     int oldSize = message.Length;
                     int x16 = ((message.Length / 16) + 1) * 16;
@@ -399,7 +399,7 @@ int[] x14 = new int[256]
                     encryptImage.Clear();
                     //INNY KLUCZ
                     //Klucz do deszyfracji
-                    KeyExpansion(Key2);
+                    KeyExpansion(Encoding.ASCII.GetBytes(KeyForDecrypt));
                     //Decrypt
                     for (int j = 0; j < message.Length / 16; j++)
                     {
@@ -474,7 +474,6 @@ int[] x14 = new int[256]
                 return bitmap;
             }
         }
-
         //Function KeyExpansion
         void KeyExpansion(byte[] Key2)
         {
