@@ -377,6 +377,7 @@ int[] x14 = new int[256]
                 {
                     //Encrypt
                     //Klucz do szyfracji
+                    
                     KeyExpansion(Key2);
                     message = imageToByteArray(tempImg);
                     int oldSize = message.Length;
